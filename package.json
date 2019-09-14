@@ -1,0 +1,11 @@
+{
+  "name": "MMM-RemoteShoppingList",
+  "version": "1.0.0",
+  "description": "MagicMirror module for displaying Google Shoppinglist",
+  "license": "MIT",
+  "author": "bugsounet",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bugsounet/MMM-RemoteShoppingList"
+  }
+}
