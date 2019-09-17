@@ -4,6 +4,7 @@ var NodeHelper = require("node_helper");
 const exec = require('child_process').exec;
 const fs = require('fs');
 const path = require("path");
+const request = require('request')
 
 module.exports = NodeHelper.create({
   start: function() {
@@ -11,14 +12,20 @@ module.exports = NodeHelper.create({
   },
 
   getList: function() {
-    exec("cd " + path.resolve(__dirname, "./temp/") + " && rm " + path.resolve(__dirname, "./temp/") + "/" + this.config.SCRIPT + "* && wget " + this.config.URL + this.config.SCRIPT);
-    var res = fs.readFileSync(path.resolve(__dirname, "./temp/" + this.config.SCRIPT),'utf8');
-    console.log("[SHOPPING] List: " + res);
-    var data = res.split(',', res.length-1);
+    var query = this.config.URL;
+    request(query, { json: true }, (err, res, data) => { // it's better preformated json url
+    	if (err) {
+		console.log("[Remote Shopping] Erreur: ", err)
+	}
 
-    if (data.length > 0) {
-	this.sendSocketNotification("REFRESHED", data);
-    }
+    	if (data.length > 0) {
+		this.sendSocketNotification("REFRESHED", data);
+    	} else {
+		data = '{ "Liste Vide !" }';
+		this.sendSocketNotification("REFRESHED", data);
+	}
+	console.log("[Remote Shopping] Liste: " + data)
+    });
 
     var timer = setTimeout(()=>{
       this.getList()

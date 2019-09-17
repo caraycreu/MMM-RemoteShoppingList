@@ -1,12 +1,15 @@
 //
 // MMM-RemoteShoppingList
 //
+// reading a json file containing the google shopping list
+// json file created with google-shopping-list <https://www.npmjs.com/package/google-shopping-list>
+// Just because : headless mode does not work on the RPI !!!
+//
 
 Module.register("MMM-RemoteShoppingList", {
   defaults: {
     scanInterval: 1000*60*10,
-    URL: "http://www.exemple.com/",
-    SCRIPT: "message.php"
+    URL: "http://www.exemple.com/example.json"
   },
 
   getStyles: function() {
